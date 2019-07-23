@@ -8,9 +8,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/*
+* This class contains test properties, that are read from *.properties files
+* */
 public class TestProperties {
-
-    private static final String PROPERTIES_FILE_PATH = ".\\src\\test\\resources\\mobileTest.properties";
 
     private static String aut;
     private static String sut;
@@ -18,11 +19,12 @@ public class TestProperties {
     private static String driverUrl;
     private static TestTypes testType;
     private static TestPlatforms testPlatform;
+    private static String browserName;
 
-    static {
+    public static void readPropertiesFromFile(String filePath){
         Properties prop = new Properties();
 
-        try (InputStream input = new FileInputStream(PROPERTIES_FILE_PATH)) {
+        try (InputStream input = new FileInputStream(filePath)) {
             if (input == null) {
                 System.out.println("Sorry, unable to find config.properties");
             }
@@ -36,6 +38,7 @@ public class TestProperties {
         String platformString = prop.getProperty("platform.name");
         device = prop.getProperty("device.name");
         driverUrl = prop.getProperty("driver.url");
+        browserName = prop.getProperty("browserName");
 
         if (TestProperties.getSut() != null && TestProperties.getAut() == null) {
             testType = TestTypes.SUT;
@@ -82,4 +85,9 @@ public class TestProperties {
     public static TestTypes getTestType() {
         return testType;
     }
+
+    public static String getBrowserName() {
+        return browserName;
+    }
+
 }

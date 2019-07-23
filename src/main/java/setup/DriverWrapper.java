@@ -4,6 +4,7 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.net.URL;
 
 public class DriverWrapper {
@@ -19,12 +20,16 @@ public class DriverWrapper {
         capabilities.setCapability("platformName", TestProperties.getTestPlatform().getItem());
 
         switch (TestProperties.getTestType()) {
+
             case AUT:
-                capabilities.setCapability("app", TestProperties.getAut());
+                File appPath = new File(TestProperties.getAut());
+                capabilities.setCapability("app", appPath.getAbsoluteFile());
                 break;
+
             case SUT:
-                capabilities.setCapability("browserName", "Chrome");
+                capabilities.setCapability("browserName", TestProperties.getBrowserName());
                 break;
+
             default:
                 throw new Exception("Unclear type of mobile app");
         }

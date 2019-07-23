@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Web tests">
+
+<test name="Web tests">
+    <groups>
+        <run>
+            <include name="web"/>
+        </run>
+    </groups>
+
+    <classes>
+        <class name="scenarios.webTests.simpleWebTests"/>
+        <class name="scenarios.Hooks"/>
+    </classes>
+</test>
+
+</suite>
