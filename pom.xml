@@ -24,12 +24,22 @@
     <profiles>
 
         <profile>
-            <id>mobile_hw1</id>
+            <id>web_test</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <suite.xml>src/test/resources/web_test.xml</suite.xml>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>native_test</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <suite.xml>src/test/resources/mobile_hw1.xml</suite.xml>
+                <suite.xml>src/test/resources/native_test.xml</suite.xml>
             </properties>
         </profile>
 

@@ -1,16 +1,17 @@
-package Setup;
+package setup;
 
-import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
-public class DriverSetup {
+public class DriverWrapper {
 
-    protected AndroidDriver driver;
+    protected static AppiumDriver driver;
+    protected static WebDriverWait wait;
 
-    protected void prepareAndroid() throws Exception {
+    public void prepareDriver() throws Exception {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         //Device caps
@@ -29,8 +30,17 @@ public class DriverSetup {
         }
 
         // Init driver for local Appium server with capabilities have been set
-        driver = new AndroidDriver(new URL(TestProperties.getDriverUrl()), capabilities);
+        driver = new AppiumDriver(new URL(TestProperties.getDriverUrl()), capabilities);
+
+        wait = new WebDriverWait(driver, 5);
     }
 
+    public AppiumDriver getDriver() {
+        return driver;
+    }
+
+    public WebDriverWait getWait() {
+        return wait;
+    }
 }
 

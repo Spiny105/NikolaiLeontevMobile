@@ -1,4 +1,4 @@
-package Setup;
+package setup;
 
 import enums.TestPlatforms;
 import enums.TestTypes;
