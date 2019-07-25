@@ -2,16 +2,18 @@ package scenarios.webTests;
 
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Test;
-import setup.DriverWrapper;
+import scenarios.BaseTest;
 import setup.TestProperties;
 
 @Test(groups = "web")
-public class simpleWebTests extends DriverWrapper {
+public class simpleWebTests extends BaseTest {
 
     @Test(groups = "web", description = "Open website")
     public void webTest() throws InterruptedException {
-        driver.get(TestProperties.getSut());
-        wait.until(ExpectedConditions.urlToBe(TestProperties.getSut() + "/"));
+        driverWrapper.getDriver().get(TestProperties.getSut());
+        driverWrapper.getWait().until(ExpectedConditions.urlMatches(TestProperties.getSut() + "*"));
+        driverWrapper.getWait().until(ExpectedConditions.titleIs("Internet Assigned Numbers Authority"));
+
         System.out.println("Site opening done");
     }
 

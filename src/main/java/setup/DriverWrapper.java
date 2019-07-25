@@ -9,8 +9,16 @@ import java.net.URL;
 
 public class DriverWrapper {
 
-    protected static AppiumDriver driver;
-    protected static WebDriverWait wait;
+    private static DriverWrapper instance = new DriverWrapper();
+
+    private DriverWrapper(){}
+
+    public static  DriverWrapper getInstance(){
+        return instance;
+    }
+
+    private AppiumDriver driver;
+    private WebDriverWait wait;
 
     public void prepareDriver() throws Exception {
         DesiredCapabilities capabilities = new DesiredCapabilities();
