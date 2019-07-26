@@ -2,7 +2,7 @@ package enums;
 
 public enum TestPlatforms {
 
-    IOS("IOS"),
+    IOS("iOS"),
     ANDROID("Android"),
     UNKNOWN("Unknown");
 

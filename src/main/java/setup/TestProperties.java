@@ -20,6 +20,8 @@ public class TestProperties {
     private static TestTypes testType;
     private static TestPlatforms testPlatform;
     private static String browserName;
+    private static String udid;
+    private static String platformVersion;
 
     public static void readPropertiesFromFile(String filePath){
         Properties prop = new Properties();
@@ -39,6 +41,8 @@ public class TestProperties {
         device = prop.getProperty("device.name");
         driverUrl = prop.getProperty("driver.url");
         browserName = prop.getProperty("browserName");
+        udid = prop.getProperty("udid");
+        platformVersion=prop.getProperty("platform.version");
 
         if (TestProperties.getSut() != null && TestProperties.getAut() == null) {
             testType = TestTypes.SUT;
@@ -52,14 +56,14 @@ public class TestProperties {
             case "Android":
                 testPlatform = TestPlatforms.ANDROID;
                 break;
-            case "IOS":
+            case "iOS":
                 testPlatform = TestPlatforms.IOS;
                 break;
             default:
                 testPlatform = TestPlatforms.UNKNOWN;
         }
 
-        System.out.println("");
+        System.out.println(browserName);
     }
 
     public static String getAut() {
@@ -90,4 +94,11 @@ public class TestProperties {
         return browserName;
     }
 
+    public static String getUdid() {
+        return udid;
+    }
+
+    public static String getPlatformVersion() {
+        return platformVersion;
+    }
 }

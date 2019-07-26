@@ -13,7 +13,7 @@ public class DriverWrapper {
 
     private DriverWrapper(){}
 
-    public static  DriverWrapper getInstance(){
+    public static DriverWrapper getInstance(){
         return instance;
     }
 
@@ -24,18 +24,27 @@ public class DriverWrapper {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         //Device caps
-        capabilities.setCapability("deviceName", TestProperties.getDevice());
+        //capabilities.setCapability("deviceName", TestProperties.getDevice());
+        capabilities.setCapability("udid", TestProperties.getUdid());
         capabilities.setCapability("platformName", TestProperties.getTestPlatform().getItem());
+        capabilities.setCapability("platformVersion", TestProperties.getPlatformVersion());
+
+        System.out.println("udid = " + TestProperties.getUdid());
+        System.out.println("platformName = " + TestProperties.getTestPlatform().getItem());
+        System.out.println("platformVersion = " + TestProperties.getPlatformVersion());
 
         switch (TestProperties.getTestType()) {
 
             case AUT:
                 File appPath = new File(TestProperties.getAut());
-                capabilities.setCapability("app", appPath.getAbsoluteFile());
+                capabilities.setCapability("appPackage", "com.example.android.contactmanager");
+                capabilities.setCapability("appActivity", ".ContactManager");
+                //capabilities.setCapability("app", appPath.getAbsoluteFile());
                 break;
 
             case SUT:
                 capabilities.setCapability("browserName", TestProperties.getBrowserName());
+                System.out.println("browserName = " + TestProperties.getBrowserName());
                 break;
 
             default:
