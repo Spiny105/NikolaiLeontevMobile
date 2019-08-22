@@ -1,6 +1,8 @@
 package setup;
 
 import io.appium.java_client.AppiumDriver;
+import io.restassured.RestAssured;
+import io.restassured.http.Header;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -24,27 +26,22 @@ public class DriverWrapper {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         //Device caps
-        //capabilities.setCapability("deviceName", TestProperties.getDevice());
         capabilities.setCapability("udid", TestProperties.getUdid());
         capabilities.setCapability("platformName", TestProperties.getTestPlatform().getItem());
         capabilities.setCapability("platformVersion", TestProperties.getPlatformVersion());
-
-        System.out.println("udid = " + TestProperties.getUdid());
-        System.out.println("platformName = " + TestProperties.getTestPlatform().getItem());
-        System.out.println("platformVersion = " + TestProperties.getPlatformVersion());
 
         switch (TestProperties.getTestType()) {
 
             case AUT:
                 File appPath = new File(TestProperties.getAut());
-                capabilities.setCapability("appPackage", "com.example.android.contactmanager");
-                capabilities.setCapability("appActivity", ".ContactManager");
-                //capabilities.setCapability("app", appPath.getAbsoluteFile());
+                //installApkToDevice(appPath, "", TestProperties.getUdid());
+
+                capabilities.setCapability("appPackage", TestProperties.getAppPackage());
+                capabilities.setCapability("appActivity", TestProperties.getAppActivity());
                 break;
 
             case SUT:
                 capabilities.setCapability("browserName", TestProperties.getBrowserName());
-                System.out.println("browserName = " + TestProperties.getBrowserName());
                 break;
 
             default:
@@ -64,5 +61,13 @@ public class DriverWrapper {
     public WebDriverWait getWait() {
         return wait;
     }
+
+//    public void installApkToDevice(File apkFilePath, String cloudAddr, String deviceUdid){
+//        RestAssured.given()
+//                .header(new Header("Authorization", "1ba5d009-0335-42b9-ab45-5db207b5044e"))
+//                .param("serial", deviceUdid)
+//                .param("file", apkFilePath.getAbsolutePath())
+//                .post("https://mobilecloud.epam.com/automation/api/storage/install/:serial[?doResign=true]");
+//    }
 }
 

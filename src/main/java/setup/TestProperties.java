@@ -22,6 +22,9 @@ public class TestProperties {
     private static String browserName;
     private static String udid;
     private static String platformVersion;
+    private static String appActivity;
+    private static String appPackage;
+
 
     public static void readPropertiesFromFile(String filePath){
         Properties prop = new Properties();
@@ -39,10 +42,12 @@ public class TestProperties {
         sut = prop.getProperty("sut");
         String platformString = prop.getProperty("platform.name");
         device = prop.getProperty("device.name");
-        driverUrl = prop.getProperty("driver.url");
+        driverUrl = String.format(prop.getProperty("driver.url"), System.getenv("EPAM cloud token"));
         browserName = prop.getProperty("browserName");
         udid = prop.getProperty("udid");
         platformVersion=prop.getProperty("platform.version");
+        appActivity=prop.getProperty("app.activity");
+        appPackage=prop.getProperty("app.package");
 
         if (TestProperties.getSut() != null && TestProperties.getAut() == null) {
             testType = TestTypes.SUT;
@@ -63,7 +68,6 @@ public class TestProperties {
                 testPlatform = TestPlatforms.UNKNOWN;
         }
 
-        System.out.println(browserName);
     }
 
     public static String getAut() {
@@ -100,5 +104,13 @@ public class TestProperties {
 
     public static String getPlatformVersion() {
         return platformVersion;
+    }
+
+    public static String getAppActivity() {
+        return appActivity;
+    }
+
+    public static String getAppPackage() {
+        return appPackage;
     }
 }

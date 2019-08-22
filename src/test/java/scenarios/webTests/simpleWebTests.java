@@ -5,7 +5,6 @@ import org.testng.annotations.Test;
 import scenarios.BaseTest;
 import setup.TestProperties;
 
-@Test(groups = "web")
 public class simpleWebTests extends BaseTest {
 
     @Test(groups = "web", description = "Open website")
