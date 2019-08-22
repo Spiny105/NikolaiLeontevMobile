@@ -21,7 +21,7 @@ public class Hooks extends BaseTest {
         driverWrapper.prepareDriver();
     }
 
-    //@AfterSuite(groups = {"native", "web"}, description = "Close driver on all tests completion")
+    @AfterSuite(groups = {"native", "web"}, description = "Close driver on all tests completion")
     public void tearDown() throws Exception {
         driverWrapper.getDriver().quit();
     }
