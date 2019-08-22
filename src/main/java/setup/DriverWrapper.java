@@ -7,7 +7,9 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 public class DriverWrapper {
 
@@ -34,7 +36,7 @@ public class DriverWrapper {
 
             case AUT:
                 File appPath = new File(TestProperties.getAut());
-                //installApkToDevice(appPath, "", TestProperties.getUdid());
+                installApkToDevice(System.getenv("EPAM cloud token"), appPath.getAbsolutePath(), TestProperties.getUdid());
 
                 capabilities.setCapability("appPackage", TestProperties.getAppPackage());
                 capabilities.setCapability("appActivity", TestProperties.getAppActivity());
@@ -62,12 +64,16 @@ public class DriverWrapper {
         return wait;
     }
 
-//    public void installApkToDevice(File apkFilePath, String cloudAddr, String deviceUdid){
-//        RestAssured.given()
-//                .header(new Header("Authorization", "1ba5d009-0335-42b9-ab45-5db207b5044e"))
-//                .param("serial", deviceUdid)
-//                .param("file", apkFilePath.getAbsolutePath())
-//                .post("https://mobilecloud.epam.com/automation/api/storage/install/:serial[?doResign=true]");
-//    }
+    public void installApkToDevice(String token, String filePath, String udid){
+        String curlCommand = String.format("curl -k -v -H \"Authorization: Bearer %s\" -F \"file=@%s\" \"https://mobilecloud.epam.com/automation/api/storage/install/%s\"", token, filePath, udid);
+        try {
+            Process process = Runtime.getRuntime().exec(curlCommand);
+            process.waitFor(5000, TimeUnit.MILLISECONDS);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
